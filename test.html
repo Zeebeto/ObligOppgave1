@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.11.3.css">
+    <script src="https://code.jquery.com/qunit/qunit-2.11.3.js"></script>
+    <script src="./isdatevalid.js" defer></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+    <script>
+          QUnit.test('sjekk lengde', function(assert) {
+            let actual = isDateValid('01.01.2001');
+            let expected = true;
+            assert.equal(actual, expected);
+          });
+          QUnit.test('dots er ikke på riktig plass', function(assert) {
+            let actual = isDateValid('0101..2001');
+            let expected = false;
+            assert.equal(actual, expected);
+          });
+          QUnit.test('år har mer en 4 siffer', function(assert) {
+            let actual = isDateValid('01.01.20011');
+            let expected = false;
+            assert.equal(actual, expected);
+          });
+          QUnit.test('mnd har ikke 2 siffer', function(assert) {
+            let actual = isDateValid('01.1.2001.');
+            let expected = false;
+            assert.equal(actual, expected);
+          });
+          QUnit.test('mnd utenfor 1-12', function(assert) {
+            let actual = isDateValid('01.13.2001');
+            let expected = false;
+            assert.equal(actual, expected);
+          });
+          QUnit.test('dag større en 31', function(assert) {
+            let actual = isDateValid('32.01.2001');
+            let expected = false;
+            assert.equal(actual, expected);
+          });
+          QUnit.test('31 november som ikke eksisterer', function(assert) {
+            let actual = isDateValid('31.11.2001');
+            let expected = false;
+            assert.equal(actual, expected);
+          });
+          QUnit.test('30. februar', function(assert) {
+            let actual = isDateValid('30.02.2001');
+            let expected = false;
+            assert.equal(actual, expected);
+          });
+          QUnit.test('29 feb når det IKKE er skuddår', function(assert) {
+            let actual = isDateValid('29.02.2019');
+            let expected = false;
+            assert.equal(actual, expected);
+          });
+          QUnit.test('29. feb NÅR det er skuddår', function(assert) {
+            let actual = isDateValid('29.02.2020');
+            let expected = true;
+            assert.equal(actual, expected);
+          });
+      </script>
+      
+</body>
+</html>
